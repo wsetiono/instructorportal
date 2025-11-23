@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Instruktur</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #06ffa5;
+            --warning-color: #ffbe0b;
+            --danger-color: #fb5607;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-header h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .dashboard-container {
+            display: none;
+            min-height: 100vh;
+            background-color: #f5f7fb;
+        }
+        
+        .sidebar {
+            height: 100vh;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 250px;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
+        
+        .sidebar-item {
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-item:hover {
+            background-color: #f0f2ff;
+            color: var(--primary-color);
+        }
+        
+        .sidebar-item.active {
+            background-color: #f0f2ff;
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .sidebar-item i {
+            margin-right: 10px;
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+        }
+        
+        .content-header {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .content-section {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f2ff;
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+		.btn-secondary-custom {
+            background-color: red;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+		
+        .btn-primary-custom:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .student-table th {
+            background-color: #f0f2ff;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .student-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f0f2ff;
+        }
+        
+        .student-table tr:hover {
+            background-color: #f9faff;
+        }
+        
+        .attendance-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .assessment-card {
+            border: 1px solid #f0f2ff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .assessment-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transform: translateY(-3px);
+        }
+        
+        .module-card {
+            border: 1px solid #f0f2ff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .module-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .module-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #f0f2ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .certificate-card {
+            border: 1px solid #f0f2ff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .student-progress {
+            width: 100%;
+            height: 8px;
+            background-color: #f0f2ff;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+        
+        .student-progress-bar {
+            height: 100%;
+            background-color: var(--success-color);
+            border-radius: 4px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+        
+        .custom-toast {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            min-width: 300px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .toast-success {
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .toast-error {
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .toast-icon {
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .toast-success .toast-icon {
+            color: var(--success-color);
+        }
+        
+        .toast-error .toast-icon {
+            color: var(--danger-color);
+        }
+        
+        .badge-primary-custom {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .badge-success-custom {
+            background-color: var(--success-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .badge-warning-custom {
+            background-color: var(--warning-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .modal-content {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .modal-header .btn-close {
+            filter: invert(1);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .tab-content {
+            padding-top: 1.5rem;
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            border: none;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            background-color: transparent;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-upload-input {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .file-upload-label {
+            display: block;
+            padding: 0.75rem 1rem;
+            background-color: #f0f2ff;
+            color: var(--primary-color);
+            border: 2px dashed var(--primary-color);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload-label:hover {
+            background-color: #e6e9ff;
+        }
+        
+        .file-info {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--dark-color);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .sidebar-header h3 {
+                display: none;
+            }
+            
+            .sidebar-item span {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Portal Instruktur</h1>
+                <p class="text-muted">Masuk untuk mengakses dashboard</p>
+            </div>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 btn-primary-custom">Masuk</button>
+                <div class="mt-3 text-center">
+                    <small class="text-muted">Demo Credentials:</small><br>
+                    <small class="text-muted">Username: instructor1</small><br>
+                    <small class="text-muted">Password: password1</small>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div class="dashboard-container" id="dashboardPage">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Portal Instruktur</h3>
+                <p class="mb-0">Selamat datang, Instructor</p>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#" class="sidebar-item active" data-section="attendance">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Manajemen Peserta</span>
+                </a>
+				<!--
+                <a href="#" class="sidebar-item" data-section="assessment">
+                    <i class="bi bi-clipboard-check-fill"></i>
+                    <span>Assessment</span>
+                </a>
+                <a href="#" class="sidebar-item" data-section="modules">
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                    <span>Modul Pembelajaran</span>
+                </a>
+                <a href="#" class="sidebar-item" data-section="certificates">
+                    <i class="bi bi-award-fill"></i>
+                    <span>Sertifikat</span>
+                </a>
+				-->
+                <a href="#" class="sidebar-item" id="logoutBtn">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Keluar</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <div>
+                    <h2>Dashboard Instruktur</h2>
+                    <p class="mb-0 text-muted">Kelola kelas dan peserta Anda</p>
+                </div>
+                <div>
+                    <span class="badge bg-primary">Animation Basic</span>
+                    <span class="badge bg-secondary ms-2">Mr. Michael Situmorang</span>
+                </div>
+            </div>
+
+            <!-- Attendance Section -->
+            <div class="content-section" id="attendanceSection">
+                <h3 class="section-title">Manajemen Peserta dan Absensi</h3>
+                
+                <div class="mb-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="classSelect" class="form-label">Pilih Kelas</label>
+                            <select class="form-select" id="classSelect">
+                                <option value="animation-basic" selected>Animation Basic</option>
+                                <option value="web-development">Web Development</option>
+                                <option value="ui-ux-design">UI/UX Design</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="sessionDate" class="form-label">Tanggal Sesi</label>
+                            <input type="date" class="form-control" id="sessionDate" value="2025-11-10">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="sessionTime" class="form-label">Waktu Sesi</label>
+                            <input type="text" class="form-control" id="sessionTime" value="10:00-11:00">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="lessonTopic" class="form-label">Topik Pelajaran</label>
+                    <input type="text" class="form-control" id="lessonTopic" value="Definisi Animasi">
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="student-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Peserta</th>
+                                <th>Sesi Selesai</th>
+                                <th>Total Sesi</th>
+                                <th>Progress</th>
+                                <th>Absensi Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Andi Sarifin</td>
+                                <td>5</td>
+                                <td>12</td>
+                                <td>
+                                    <div class="student-progress">
+                                        <div class="student-progress-bar" style="width: 42%"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    Waiting for Approval (Student Submit Hadir)
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary-custom save-attendance">
+                                        <i class="bi bi-check-circle"></i> Approve
+                                    </button>
+                                </td>
+								 <td>
+                                    <button class="btn btn-sm btn-secondary-custom save-attendance">
+                                        <i class="bi bi-check-circle"></i> Reject
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Budi Hidayat</td>
+                                <td>7</td>
+                                <td>12</td>
+                                <td>
+                                    <div class="student-progress">
+                                        <div class="student-progress-bar" style="width: 58%"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    Waiting for Approval (Student Submit Hadir)
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary-custom save-attendance">
+                                        <i class="bi bi-check-circle"></i> Approve
+                                    </button>
+                                </td>
+								 <td>
+                                    <button class="btn btn-sm btn-secondary-custom save-attendance">
+                                        <i class="bi bi-check-circle"></i> Reject
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Citra Dewi</td>
+                                <td>10</td>
+                                <td>12</td>
+                                <td>
+                                    <div class="student-progress">
+                                        <div class="student-progress-bar" style="width: 83%"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    Waiting for Approval (Student Submit Hadir)
+                                </td>
+                              <td>
+                                    <button class="btn btn-sm btn-primary-custom save-attendance">
+                                        <i class="bi bi-check-circle"></i> Approve
+                                    </button>
+                                </td>
+								 <td>
+                                    <button class="btn btn-sm btn-secondary-custom save-attendance">
+                                        <i class="bi bi-check-circle"></i> Reject
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Assessment Section -->
+            <div class="content-section d-none" id="assessmentSection">
+                <h3 class="section-title">Manajemen Assessment</h3>
+                
+                <button class="btn btn-primary-custom mb-4" data-bs-toggle="modal" data-bs-target="#addAssessmentModal">
+                    <i class="bi bi-plus-circle"></i> Tambah Assessment Baru
+                </button>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs" id="assessmentTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="quiz-tab" data-bs-toggle="tab" data-bs-target="#quiz" type="button" role="tab">Quiz</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="exam-tab" data-bs-toggle="tab" data-bs-target="#exam" type="button" role="tab">Ujian</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="practical-tab" data-bs-toggle="tab" data-bs-target="#practical" type="button" role="tab">Praktikum</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="assessmentTabsContent">
+                            <div class="tab-pane fade show active" id="quiz" role="tabpanel">
+                                <div class="assessment-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5>Quiz 1: Dasar-Dasar Animasi</h5>
+                                            <p class="mb-1">Kelas: Animation Basic</p>
+                                            <p class="mb-0">Tanggal: 15 November 2025, 10:00-11:00</p>
+                                        </div>
+                                        <div>
+                                            <span class="badge-primary-custom">Aktif</span>
+                                            <button class="btn btn-sm btn-outline-primary ms-2 edit-assessment">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger ms-1 delete-assessment">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="assessment-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5>Quiz 2: Prinsip Animasi</h5>
+                                            <p class="mb-1">Kelas: Animation Basic</p>
+                                            <p class="mb-0">Tanggal: 22 November 2025, 10:00-11:00</p>
+                                        </div>
+                                        <div>
+                                            <span class="badge-warning-custom">Terjadwal</span>
+                                            <button class="btn btn-sm btn-outline-primary ms-2 edit-assessment">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger ms-1 delete-assessment">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="exam" role="tabpanel">
+                                <div class="assessment-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5>Ujian Tengah Semester</h5>
+                                            <p class="mb-1">Kelas: Animation Basic</p>
+                                            <p class="mb-0">Tanggal: 30 November 2025, 09:00-11:00</p>
+                                        </div>
+                                        <div>
+                                            <span class="badge-warning-custom">Terjadwal</span>
+                                            <button class="btn btn-sm btn-outline-primary ms-2 edit-assessment">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger ms-1 delete-assessment">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="practical" role="tabpanel">
+                                <div class="assessment-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5>Praktikum 1: Animasi Dasar</h5>
+                                            <p class="mb-1">Kelas: Animation Basic</p>
+                                            <p class="mb-0">Tanggal: 17 November 2025, 13:00-15:00</p>
+                                        </div>
+                                        <div>
+                                            <span class="badge-warning-custom">Terjadwal</span>
+                                            <button class="btn btn-sm btn-outline-primary ms-2 edit-assessment">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger ms-1 delete-assessment">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modules Section -->
+            <div class="content-section d-none" id="modulesSection">
+                <h3 class="section-title">Modul Pembelajaran</h3>
+                
+                <button class="btn btn-primary-custom mb-4" data-bs-toggle="modal" data-bs-target="#uploadModuleModal">
+                    <i class="bi bi-cloud-upload"></i> Upload Modul Baru
+                </button>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="module-card">
+                            <div class="module-info">
+                                <div class="module-icon">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                </div>
+                                <div>
+                                    <h5>Modul 1: Pengenalan Animasi</h5>
+                                    <p class="mb-0">Diunggah: 1 November 2025</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="bi bi-eye"></i> Lihat
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger delete-module">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="module-card">
+                            <div class="module-info">
+                                <div class="module-icon">
+                                    <i class="bi bi-file-earmark-word"></i>
+                                </div>
+                                <div>
+                                    <h5>Modul 2: Prinsip-Prinsip Animasi</h5>
+                                    <p class="mb-0">Diunggah: 5 November 2025</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="bi bi-eye"></i> Lihat
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger delete-module">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="module-card">
+                            <div class="module-info">
+                                <div class="module-icon">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                </div>
+                                <div>
+                                    <h5>Modul 3: Teknik Animasi 2D</h5>
+                                    <p class="mb-0">Diunggah: 8 November 2025</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="bi bi-eye"></i> Lihat
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger delete-module">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certificates Section -->
+            <div class="content-section d-none" id="certificatesSection">
+                <h3 class="section-title">Generate Sertifikat</h3>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="certificate-card">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5>Citra Dewi</h5>
+                                    <p class="mb-1">Kelas: Animation Basic</p>
+                                    <div class="student-progress">
+                                        <div class="student-progress-bar" style="width: 100%"></div>
+                                    </div>
+                                    <p class="mb-0 mt-1">Progress: 12/12 Sesi Selesai</p>
+                                </div>
+                                <div>
+                                    <span class="badge-success-custom">Lengkap</span>
+                                    <button class="btn btn-primary-custom ms-2 generate-certificate">
+                                        <i class="bi bi-award"></i> Generate Sertifikat
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="certificate-card">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5>Budi Hidayat</h5>
+                                    <p class="mb-1">Kelas: Animation Basic</p>
+                                    <div class="student-progress">
+                                        <div class="student-progress-bar" style="width: 58%"></div>
+                                    </div>
+                                    <p class="mb-0 mt-1">Progress: 7/12 Sesi Selesai</p>
+                                </div>
+                                <div>
+                                    <span class="badge-warning-custom">Progres</span>
+                                    <button class="btn btn-secondary ms-2" disabled>
+                                        <i class="bi bi-award"></i> Generate Sertifikat
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="certificate-card">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5>Andi Sarifin</h5>
+                                    <p class="mb-1">Kelas: Animation Basic</p>
+                                    <div class="student-progress">
+                                        <div class="student-progress-bar" style="width: 42%"></div>
+                                    </div>
+                                    <p class="mb-0 mt-1">Progress: 5/12 Sesi Selesai</p>
+                                </div>
+                                <div>
+                                    <span class="badge-warning-custom">Progres</span>
+                                    <button class="btn btn-secondary ms-2" disabled>
+                                        <i class="bi bi-award"></i> Generate Sertifikat
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Assessment Modal -->
+    <div class="modal fade" id="addAssessmentModal" tabindex="-1" aria-labelledby="addAssessmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAssessmentModalLabel">Tambah Assessment Baru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAssessmentForm">
+                        <div class="mb-3">
+                            <label for="assessmentType" class="form-label">Tipe Assessment</label>
+                            <select class="form-select" id="assessmentType">
+                                <option value="quiz">Quiz</option>
+                                <option value="exam">Ujian</option>
+                                <option value="practical">Praktikum</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="assessmentTitle" class="form-label">Judul Assessment</label>
+                            <input type="text" class="form-control" id="assessmentTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="assessmentClass" class="form-label">Kelas</label>
+                            <select class="form-select" id="assessmentClass">
+                                <option value="animation-basic">Animation Basic</option>
+                                <option value="web-development">Web Development</option>
+                                <option value="ui-ux-design">UI/UX Design</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="assessmentDate" class="form-label">Tanggal</label>
+                                <input type="date" class="form-control" id="assessmentDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="assessmentTime" class="form-label">Waktu</label>
+                                <input type="text" class="form-control" id="assessmentTime" placeholder="10:00-11:00" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="assessmentDescription" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" id="assessmentDescription" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary-custom" id="saveAssessmentBtn">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Module Modal -->
+    <div class="modal fade" id="uploadModuleModal" tabindex="-1" aria-labelledby="uploadModuleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModuleModalLabel">Upload Modul Pembelajaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="uploadModuleForm">
+                        <div class="mb-3">
+                            <label for="moduleTitle" class="form-label">Judul Modul</label>
+                            <input type="text" class="form-control" id="moduleTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="moduleClass" class="form-label">Kelas</label>
+                            <select class="form-select" id="moduleClass">
+                                <option value="animation-basic">Animation Basic</option>
+                                <option value="web-development">Web Development</option>
+                                <option value="ui-ux-design">UI/UX Design</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="moduleFile" class="form-label">File Modul</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="moduleFile" class="file-upload-input" accept=".pdf,.doc,.docx" required>
+                                <label for="moduleFile" class="file-upload-label">
+                                    <i class="bi bi-cloud-upload"></i> Pilih File (PDF/Word)
+                                </label>
+                                <div class="file-info" id="fileInfo"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="moduleDescription" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" id="moduleDescription" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary-custom" id="uploadModuleBtn">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificate Preview Modal -->
+    <div class="modal fade" id="certificatePreviewModal" tabindex="-1" aria-labelledby="certificatePreviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="certificatePreviewModalLabel">Pratinjau Sertifikat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="certificate-preview text-center p-4 border">
+                        <h2>SERTIFIKAT KELULUSAN</h2>
+                        <p class="mb-4">Diberikan kepada:</p>
+                        <h3 id="certificateStudentName" class="mb-4">Nama Peserta</h3>
+                        <p>Atas keberhasilan menyelesaikan seluruh sesi pembelajaran dalam kelas:</p>
+                        <h4 id="certificateClassName" class="mb-4">Nama Kelas</h4>
+                        <p>Dengan total <span id="certificateTotalSessions">12</span> sesi</p>
+                        <p class="mt-4">Diterbitkan pada: <span id="certificateDate"></span></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-primary-custom" id="downloadCertificateBtn">
+                        <i class="bi bi-download"></i> Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // DOM Elements
+        const loginPage = document.getElementById('loginPage');
+        const dashboardPage = document.getElementById('dashboardPage');
+        const loginForm = document.getElementById('loginForm');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const attendanceSection = document.getElementById('attendanceSection');
+        const assessmentSection = document.getElementById('assessmentSection');
+        const modulesSection = document.getElementById('modulesSection');
+        const certificatesSection = document.getElementById('certificatesSection');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const saveAttendanceBtns = document.querySelectorAll('.save-attendance');
+        const addAssessmentForm = document.getElementById('addAssessmentForm');
+        const saveAssessmentBtn = document.getElementById('saveAssessmentBtn');
+        const uploadModuleForm = document.getElementById('uploadModuleForm');
+        const uploadModuleBtn = document.getElementById('uploadModuleBtn');
+        const moduleFileInput = document.getElementById('moduleFile');
+        const fileInfo = document.getElementById('fileInfo');
+        const generateCertificateBtns = document.querySelectorAll('.generate-certificate');
+        const downloadCertificateBtn = document.getElementById('downloadCertificateBtn');
+        const deleteAssessmentBtns = document.querySelectorAll('.delete-assessment');
+        const deleteModuleBtns = document.querySelectorAll('.delete-module');
+
+        // Show Toast Notification
+        function showToast(message, type = 'success') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `custom-toast toast-${type}`;
+            
+            const icon = type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-circle-fill';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="bi ${icon}"></i>
+                </div>
+                <div class="toast-message">${message}</div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease-out reverse';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Login Form Handler
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation for demo
+            if (username === 'instructor1' && password === 'password1') {
+                loginPage.style.display = 'none';
+                dashboardPage.style.display = 'block';
+                showToast('Login berhasil! Selamat datang di Portal Instruktur.');
+            } else {
+                showToast('Username atau password salah. Silakan coba lagi.', 'error');
+            }
+        });
+
+        // Sidebar Navigation
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                sidebarItems.forEach(i => i.classList.remove('active'));
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Get the section to show
+                const section = this.getAttribute('data-section');
+                
+                // Hide all sections
+                attendanceSection.classList.add('d-none');
+                assessmentSection.classList.add('d-none');
+                modulesSection.classList.add('d-none');
+                certificatesSection.classList.add('d-none');
+                
+                // Show the selected section
+                if (section === 'attendance') {
+                    attendanceSection.classList.remove('d-none');
+                } else if (section === 'assessment') {
+                    assessmentSection.classList.remove('d-none');
+                } else if (section === 'modules') {
+                    modulesSection.classList.remove('d-none');
+                } else if (section === 'certificates') {
+                    certificatesSection.classList.remove('d-none');
+                }
+            });
+        });
+
+        // Logout Handler
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Reset form
+            loginForm.reset();
+            
+            // Show login page and hide dashboard
+            dashboardPage.style.display = 'none';
+            loginPage.style.display = 'flex';
+            
+            // Reset sidebar navigation
+            sidebarItems.forEach(item => item.classList.remove('active'));
+            sidebarItems[0].classList.add('active');
+            
+            // Reset sections
+            attendanceSection.classList.remove('d-none');
+            assessmentSection.classList.add('d-none');
+            modulesSection.classList.add('d-none');
+            certificatesSection.classList.add('d-none');
+            
+            showToast('Anda telah keluar dari sistem.');
+        });
+
+        // Save Attendance Handler
+        saveAttendanceBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const row = this.closest('tr');
+                const studentName = row.querySelector('.attendance-select').getAttribute('data-student');
+                const attendanceStatus = row.querySelector('.attendance-select').value;
+                
+                if (!attendanceStatus) {
+                    showToast('Silakan pilih status kehadiran terlebih dahulu.', 'error');
+                    return;
+                }
+                
+                // Update session count if present
+                if (attendanceStatus === 'present') {
+                    const sessionCell = row.cells[2];
+                    const currentSessions = parseInt(sessionCell.textContent);
+                    sessionCell.textContent = currentSessions + 1;
+                    
+                    // Update progress bar
+                    const progressBar = row.querySelector('.student-progress-bar');
+                    const totalSessions = parseInt(row.cells[3].textContent);
+                    const newProgress = ((currentSessions + 1) / totalSessions) * 100;
+                    progressBar.style.width = `${newProgress}%`;
+                    
+                    showToast(`Absensi untuk ${studentName} berhasil disimpan. Sesi ditambahkan.`);
+                } else {
+                    showToast(`Absensi untuk ${studentName} berhasil disimpan.`);
+                }
+                
+                // Reset the select
+                row.querySelector('.attendance-select').value = '';
+            });
+        });
+
+        // Save Assessment Handler
+        saveAssessmentBtn.addEventListener('click', function() {
+            const type = document.getElementById('assessmentType').value;
+            const title = document.getElementById('assessmentTitle').value;
+            const className = document.getElementById('assessmentClass').value;
+            const date = document.getElementById('assessmentDate').value;
+            const time = document.getElementById('assessmentTime').value;
+            
+            if (!title || !date || !time) {
+                showToast('Mohon lengkapi semua field yang diperlukan.', 'error');
+                return;
+            }
+            
+            // Get the appropriate tab content
+            let tabContent;
+            if (type === 'quiz') {
+                tabContent = document.querySelector('#quiz');
+            } else if (type === 'exam') {
+                tabContent = document.querySelector('#exam');
+            } else {
+                tabContent = document.querySelector('#practical');
+            }
+            
+            // Create new assessment card
+            const newCard = document.createElement('div');
+            newCard.className = 'assessment-card';
+            newCard.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5>${title}</h5>
+                        <p class="mb-1">Kelas: ${className}</p>
+                        <p class="mb-0">Tanggal: ${date}, ${time}</p>
+                    </div>
+                    <div>
+                        <span class="badge-warning-custom">Terjadwal</span>
+                        <button class="btn btn-sm btn-outline-primary ms-2 edit-assessment">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger ms-1 delete-assessment">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Add to the appropriate tab
+            tabContent.appendChild(newCard);
+            
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addAssessmentModal'));
+            modal.hide();
+            addAssessmentForm.reset();
+            
+            showToast('Assessment berhasil ditambahkan.');
+            
+            // Add event listeners to new buttons
+            const newDeleteBtn = newCard.querySelector('.delete-assessment');
+            newDeleteBtn.addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin menghapus assessment ini?')) {
+                    newCard.remove();
+                    showToast('Assessment berhasil dihapus.');
+                }
+            });
+        });
+
+        // Module File Input Handler
+        moduleFileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const fileName = this.files[0].name;
+                const fileSize = (this.files[0].size / 1024).toFixed(2);
+                fileInfo.textContent = `File: ${fileName} (${fileSize} KB)`;
+            } else {
+                fileInfo.textContent = '';
+            }
+        });
+
+        // Upload Module Handler
+        uploadModuleBtn.addEventListener('click', function() {
+            const title = document.getElementById('moduleTitle').value;
+            const className = document.getElementById('moduleClass').value;
+            const file = document.getElementById('moduleFile').files[0];
+            
+            if (!title || !file) {
+                showToast('Mohon lengkapi semua field yang diperlukan.', 'error');
+                return;
+            }
+            
+            // Determine file icon based on extension
+            let fileIcon = 'bi-file-earmark';
+            const fileName = file.name;
+            if (fileName.endsWith('.pdf')) {
+                fileIcon = 'bi-file-earmark-pdf';
+            } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
+                fileIcon = 'bi-file-earmark-word';
+            }
+            
+            // Create new module card
+            const newCard = document.createElement('div');
+            newCard.className = 'module-card';
+            newCard.innerHTML = `
+                <div class="module-info">
+                    <div class="module-icon">
+                        <i class="bi ${fileIcon}"></i>
+                    </div>
+                    <div>
+                        <h5>${title}</h5>
+                        <p class="mb-0">Diunggah: ${new Date().toLocaleDateString('id-ID')}</p>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-outline-primary me-2">
+                        <i class="bi bi-eye"></i> Lihat
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger delete-module">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            // Add to modules section
+            modulesSection.querySelector('.row .col-md-12').appendChild(newCard);
+            
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('uploadModuleModal'));
+            modal.hide();
+            uploadModuleForm.reset();
+            fileInfo.textContent = '';
+            
+            showToast('Modul berhasil diunggah.');
+            
+            // Add event listener to new delete button
+            const newDeleteBtn = newCard.querySelector('.delete-module');
+            newDeleteBtn.addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin menghapus modul ini?')) {
+                    newCard.remove();
+                    showToast('Modul berhasil dihapus.');
+                }
+            });
+        });
+
+        // Generate Certificate Handler
+        generateCertificateBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.certificate-card');
+                const studentName = card.querySelector('h5').textContent;
+                const className = card.querySelector('p.mb-1').textContent.replace('Kelas: ', '');
+                const totalSessions = card.querySelector('p.mb-0.mt-1').textContent.match(/\d+/)[0];
+                
+                // Update certificate preview
+                document.getElementById('certificateStudentName').textContent = studentName;
+                document.getElementById('certificateClassName').textContent = className;
+                document.getElementById('certificateTotalSessions').textContent = totalSessions;
+                document.getElementById('certificateDate').textContent = new Date().toLocaleDateString('id-ID');
+                
+                // Show modal
+                const modal = new bootstrap.Modal(document.getElementById('certificatePreviewModal'));
+                modal.show();
+            });
+        });
+
+        // Download Certificate Handler
+        downloadCertificateBtn.addEventListener('click', function() {
+            showToast('Sertifikat berhasil diunduh.');
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('certificatePreviewModal'));
+            modal.hide();
+        });
+
+        // Delete Assessment Handler
+        deleteAssessmentBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin menghapus assessment ini?')) {
+                    const card = this.closest('.assessment-card');
+                    card.remove();
+                    showToast('Assessment berhasil dihapus.');
+                }
+            });
+        });
+
+        // Delete Module Handler
+        deleteModuleBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin menghapus modul ini?')) {
+                    const card = this.closest('.module-card');
+                    card.remove();
+                    showToast('Modul berhasil dihapus.');
+                }
+            });
+        });
+
+        // Set current date for session date input
+        document.getElementById('sessionDate').valueAsDate = new Date();
+        
+        // Set current date for assessment date input
+        document.getElementById('assessmentDate').valueAsDate = new Date();
+    </script>
+</body>
+</html>
