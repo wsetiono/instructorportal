@@ -6,428 +6,7 @@
     <title>Portal Instruktur</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3f37c9;
-            --accent-color: #f72585;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --success-color: #06ffa5;
-            --warning-color: #ffbe0b;
-            --danger-color: #fb5607;
-        }
-        
-        body {
-            background-color: #f5f7fb;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        }
-        
-        .login-card {
-            width: 100%;
-            max-width: 400px;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            background-color: white;
-        }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .login-header h1 {
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-        
-        .dashboard-container {
-            display: none;
-            min-height: 100vh;
-            background-color: #f5f7fb;
-        }
-        
-        .sidebar {
-            height: 100vh;
-            background-color: white;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 250px;
-            z-index: 100;
-        }
-        
-        .sidebar-header {
-            padding: 1.5rem;
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .sidebar-menu {
-            padding: 1rem 0;
-        }
-        
-        .sidebar-item {
-            padding: 0.75rem 1.5rem;
-            display: flex;
-            align-items: center;
-            color: var(--dark-color);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .sidebar-item:hover {
-            background-color: #f0f2ff;
-            color: var(--primary-color);
-        }
-        
-        .sidebar-item.active {
-            background-color: #f0f2ff;
-            color: var(--primary-color);
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        .sidebar-item i {
-            margin-right: 10px;
-        }
-        
-        .main-content {
-            margin-left: 250px;
-            padding: 2rem;
-        }
-        
-        .content-header {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .content-section {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
-        }
-        
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #f0f2ff;
-        }
-        
-        .btn-primary-custom {
-            background-color: var(--primary-color);
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 5px;
-            color: white;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-		.btn-secondary-custom {
-            background-color: red;
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 5px;
-            color: white;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-		
-        .btn-primary-custom:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
-        }
-        
-        .student-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .student-table th {
-            background-color: #f0f2ff;
-            padding: 0.75rem;
-            text-align: left;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
-        
-        .student-table td {
-            padding: 0.75rem;
-            border-bottom: 1px solid #f0f2ff;
-        }
-        
-        .student-table tr:hover {
-            background-color: #f9faff;
-        }
-        
-        .attendance-select {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        
-        .assessment-card {
-            border: 1px solid #f0f2ff;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s;
-        }
-        
-        .assessment-card:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transform: translateY(-3px);
-        }
-        
-        .module-card {
-            border: 1px solid #f0f2ff;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .module-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .module-icon {
-            width: 40px;
-            height: 40px;
-            background-color: #f0f2ff;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: var(--primary-color);
-        }
-        
-        .certificate-card {
-            border: 1px solid #f0f2ff;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .student-progress {
-            width: 100%;
-            height: 8px;
-            background-color: #f0f2ff;
-            border-radius: 4px;
-            margin-top: 0.5rem;
-        }
-        
-        .student-progress-bar {
-            height: 100%;
-            background-color: var(--success-color);
-            border-radius: 4px;
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
-        }
-        
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1050;
-        }
-        
-        .custom-toast {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            min-width: 300px;
-            animation: slideIn 0.3s ease-out;
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        .toast-success {
-            border-left: 4px solid var(--success-color);
-        }
-        
-        .toast-error {
-            border-left: 4px solid var(--danger-color);
-        }
-        
-        .toast-icon {
-            margin-right: 1rem;
-            font-size: 1.25rem;
-        }
-        
-        .toast-success .toast-icon {
-            color: var(--success-color);
-        }
-        
-        .toast-error .toast-icon {
-            color: var(--danger-color);
-        }
-        
-        .badge-primary-custom {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        
-        .badge-success-custom {
-            background-color: var(--success-color);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        
-        .badge-warning-custom {
-            background-color: var(--warning-color);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        
-        .modal-content {
-            border-radius: 10px;
-            border: none;
-        }
-        
-        .modal-header {
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 10px 10px 0 0;
-        }
-        
-        .modal-header .btn-close {
-            filter: invert(1);
-        }
-        
-        .form-label {
-            font-weight: 500;
-            color: var(--dark-color);
-        }
-        
-        .tab-content {
-            padding-top: 1.5rem;
-        }
-        
-        .nav-tabs .nav-link {
-            color: var(--dark-color);
-            font-weight: 500;
-            border: none;
-            border-bottom: 2px solid transparent;
-        }
-        
-        .nav-tabs .nav-link.active {
-            color: var(--primary-color);
-            background-color: transparent;
-            border-bottom: 2px solid var(--primary-color);
-        }
-        
-        .nav-tabs .nav-link:hover {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-        }
-        
-        .file-upload-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
-        }
-        
-        .file-upload-input {
-            position: absolute;
-            left: -9999px;
-        }
-        
-        .file-upload-label {
-            display: block;
-            padding: 0.75rem 1rem;
-            background-color: #f0f2ff;
-            color: var(--primary-color);
-            border: 2px dashed var(--primary-color);
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .file-upload-label:hover {
-            background-color: #e6e9ff;
-        }
-        
-        .file-info {
-            margin-top: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--dark-color);
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-            }
-            
-            .sidebar-header h3 {
-                display: none;
-            }
-            
-            .sidebar-item span {
-                display: none;
-            }
-            
-            .main-content {
-                margin-left: 70px;
-            }
-        }
-    </style>
+	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Login Page -->
@@ -507,6 +86,23 @@
             <div class="content-section" id="attendanceSection">
                 <h3 class="section-title">Manajemen Peserta dan Absensi</h3>
                 
+				<div>
+					Nama Instructor : Michael Situmorang
+				</div>
+				<div>
+					Tgl Hari ini : 20 Oktober 2025
+				</div>
+				
+				<div>
+				  <label for="classSelect" class="form-label">Pilih Program</label>
+					<select class="form-select" id="programSelect">
+						<option value="animation-basic" selected>Introduction to 3D Modelling</option>
+						<option value="web-development">Introduction to 2D Modelling</option>
+						<option value="ui-ux-design">3D Intermediate</option>
+					</select>
+				</div>
+
+				<!--
                 <div class="mb-4">
                     <div class="row">
                         <div class="col-md-4">
@@ -532,6 +128,7 @@
                     <label for="lessonTopic" class="form-label">Topik Pelajaran</label>
                     <input type="text" class="form-control" id="lessonTopic" value="Definisi Animasi">
                 </div>
+				-->
                 
                 <div class="table-responsive">
                     <table class="student-table">
@@ -539,10 +136,11 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Peserta</th>
+								<th>Status Sesi</th>
                                 <th>Sesi Selesai</th>
                                 <th>Total Sesi</th>
-                                <th>Progress</th>
                                 <th>Absensi Status</th>
+								<th>Jumlah Sesi Diambil Hari ini</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -550,16 +148,13 @@
                             <tr>
                                 <td>1</td>
                                 <td>Andi Sarifin</td>
-                                <td>5</td>
-                                <td>12</td>
-                                <td>
-                                    <div class="student-progress">
-                                        <div class="student-progress-bar" style="width: 42%"></div>
-                                    </div>
-                                </td>
+								<td>Sesi Masih Berjalan</td>
+                                <td>5 jam</td>
+                                <td>15 jam</td>
                                 <td>
                                     Waiting for Approval (Student Submit Hadir)
                                 </td>
+								<td>2 jam</td>
                                 <td>
                                     <button class="btn btn-sm btn-primary-custom save-attendance">
                                         <i class="bi bi-check-circle"></i> Approve
@@ -574,49 +169,67 @@
                             <tr>
                                 <td>2</td>
                                 <td>Budi Hidayat</td>
-                                <td>7</td>
-                                <td>12</td>
+								<td>Sesi Masih Berjalan</td>
+                                <td>7 jam</td>
+                                <td>15 jam</td>
                                 <td>
-                                    <div class="student-progress">
-                                        <div class="student-progress-bar" style="width: 58%"></div>
-                                    </div>
+                                    Approved (Student Hadir)
                                 </td>
+								<td>2 jam</td>
                                 <td>
-                                    Waiting for Approval (Student Submit Hadir)
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary-custom save-attendance">
-                                        <i class="bi bi-check-circle"></i> Approve
-                                    </button>
+									&nbsp;
                                 </td>
 								 <td>
-                                    <button class="btn btn-sm btn-secondary-custom save-attendance">
-                                        <i class="bi bi-check-circle"></i> Reject
-                                    </button>
+									&nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>3</td>
                                 <td>Citra Dewi</td>
-                                <td>10</td>
-                                <td>12</td>
+								<td>Sesi Masih Berjalan</td>
+                                <td>15 jam</td>
+                                <td>15 jam</td>
                                 <td>
-                                    <div class="student-progress">
-                                        <div class="student-progress-bar" style="width: 83%"></div>
-                                    </div>
+                                    Approved (Student Hadir)
                                 </td>
-                                <td>
-                                    Waiting for Approval (Student Submit Hadir)
-                                </td>
+								<td>2 jam</td>
                               <td>
-                                    <button class="btn btn-sm btn-primary-custom save-attendance">
-                                        <i class="bi bi-check-circle"></i> Approve
-                                    </button>
+									&nbsp;
                                 </td>
 								 <td>
-                                    <button class="btn btn-sm btn-secondary-custom save-attendance">
-                                        <i class="bi bi-check-circle"></i> Reject
-                                    </button>
+									&nbsp;
+                                </td>
+                            </tr>
+							<tr>
+                                <td>4</td>
+                                <td>Pertami</td>
+								<td><span style="color: red;">Sesi Sudah Habis<span></td>
+                                <td>15 jam</td>
+                                <td>15 jam</td>
+                                <td>N/A</td>
+								<td>N/A</td>
+                               <td>
+									&nbsp;
+                                </td>
+								 <td>
+									&nbsp;
+                                </td>
+                            </tr>
+							 <tr>
+                                <td>5</td>
+                                <td>Jakob Hidayat</td>
+								<td>Sesi Masih Berjalan</td>
+                                <td>7 jam</td>
+                                <td>15 jam</td>
+                                <td>
+                                    Rejected (Student tidak hadir)
+                                </td>
+								<td>N/A</td>
+                                <td>
+									&nbsp;
+                                </td>
+								 <td>
+									&nbsp;
                                 </td>
                             </tr>
                         </tbody>
@@ -1003,358 +616,7 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // DOM Elements
-        const loginPage = document.getElementById('loginPage');
-        const dashboardPage = document.getElementById('dashboardPage');
-        const loginForm = document.getElementById('loginForm');
-        const sidebarItems = document.querySelectorAll('.sidebar-item');
-        const attendanceSection = document.getElementById('attendanceSection');
-        const assessmentSection = document.getElementById('assessmentSection');
-        const modulesSection = document.getElementById('modulesSection');
-        const certificatesSection = document.getElementById('certificatesSection');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const saveAttendanceBtns = document.querySelectorAll('.save-attendance');
-        const addAssessmentForm = document.getElementById('addAssessmentForm');
-        const saveAssessmentBtn = document.getElementById('saveAssessmentBtn');
-        const uploadModuleForm = document.getElementById('uploadModuleForm');
-        const uploadModuleBtn = document.getElementById('uploadModuleBtn');
-        const moduleFileInput = document.getElementById('moduleFile');
-        const fileInfo = document.getElementById('fileInfo');
-        const generateCertificateBtns = document.querySelectorAll('.generate-certificate');
-        const downloadCertificateBtn = document.getElementById('downloadCertificateBtn');
-        const deleteAssessmentBtns = document.querySelectorAll('.delete-assessment');
-        const deleteModuleBtns = document.querySelectorAll('.delete-module');
-
-        // Show Toast Notification
-        function showToast(message, type = 'success') {
-            const toastContainer = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `custom-toast toast-${type}`;
-            
-            const icon = type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-circle-fill';
-            
-            toast.innerHTML = `
-                <div class="toast-icon">
-                    <i class="bi ${icon}"></i>
-                </div>
-                <div class="toast-message">${message}</div>
-            `;
-            
-            toastContainer.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.animation = 'slideIn 0.3s ease-out reverse';
-                setTimeout(() => {
-                    toast.remove();
-                }, 300);
-            }, 3000);
-        }
-
-        // Login Form Handler
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Simple validation for demo
-            if (username === 'instructor1' && password === 'password1') {
-                loginPage.style.display = 'none';
-                dashboardPage.style.display = 'block';
-                showToast('Login berhasil! Selamat datang di Portal Instruktur.');
-            } else {
-                showToast('Username atau password salah. Silakan coba lagi.', 'error');
-            }
-        });
-
-        // Sidebar Navigation
-        sidebarItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all items
-                sidebarItems.forEach(i => i.classList.remove('active'));
-                
-                // Add active class to clicked item
-                this.classList.add('active');
-                
-                // Get the section to show
-                const section = this.getAttribute('data-section');
-                
-                // Hide all sections
-                attendanceSection.classList.add('d-none');
-                assessmentSection.classList.add('d-none');
-                modulesSection.classList.add('d-none');
-                certificatesSection.classList.add('d-none');
-                
-                // Show the selected section
-                if (section === 'attendance') {
-                    attendanceSection.classList.remove('d-none');
-                } else if (section === 'assessment') {
-                    assessmentSection.classList.remove('d-none');
-                } else if (section === 'modules') {
-                    modulesSection.classList.remove('d-none');
-                } else if (section === 'certificates') {
-                    certificatesSection.classList.remove('d-none');
-                }
-            });
-        });
-
-        // Logout Handler
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Reset form
-            loginForm.reset();
-            
-            // Show login page and hide dashboard
-            dashboardPage.style.display = 'none';
-            loginPage.style.display = 'flex';
-            
-            // Reset sidebar navigation
-            sidebarItems.forEach(item => item.classList.remove('active'));
-            sidebarItems[0].classList.add('active');
-            
-            // Reset sections
-            attendanceSection.classList.remove('d-none');
-            assessmentSection.classList.add('d-none');
-            modulesSection.classList.add('d-none');
-            certificatesSection.classList.add('d-none');
-            
-            showToast('Anda telah keluar dari sistem.');
-        });
-
-        // Save Attendance Handler
-        saveAttendanceBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const row = this.closest('tr');
-                const studentName = row.querySelector('.attendance-select').getAttribute('data-student');
-                const attendanceStatus = row.querySelector('.attendance-select').value;
-                
-                if (!attendanceStatus) {
-                    showToast('Silakan pilih status kehadiran terlebih dahulu.', 'error');
-                    return;
-                }
-                
-                // Update session count if present
-                if (attendanceStatus === 'present') {
-                    const sessionCell = row.cells[2];
-                    const currentSessions = parseInt(sessionCell.textContent);
-                    sessionCell.textContent = currentSessions + 1;
-                    
-                    // Update progress bar
-                    const progressBar = row.querySelector('.student-progress-bar');
-                    const totalSessions = parseInt(row.cells[3].textContent);
-                    const newProgress = ((currentSessions + 1) / totalSessions) * 100;
-                    progressBar.style.width = `${newProgress}%`;
-                    
-                    showToast(`Absensi untuk ${studentName} berhasil disimpan. Sesi ditambahkan.`);
-                } else {
-                    showToast(`Absensi untuk ${studentName} berhasil disimpan.`);
-                }
-                
-                // Reset the select
-                row.querySelector('.attendance-select').value = '';
-            });
-        });
-
-        // Save Assessment Handler
-        saveAssessmentBtn.addEventListener('click', function() {
-            const type = document.getElementById('assessmentType').value;
-            const title = document.getElementById('assessmentTitle').value;
-            const className = document.getElementById('assessmentClass').value;
-            const date = document.getElementById('assessmentDate').value;
-            const time = document.getElementById('assessmentTime').value;
-            
-            if (!title || !date || !time) {
-                showToast('Mohon lengkapi semua field yang diperlukan.', 'error');
-                return;
-            }
-            
-            // Get the appropriate tab content
-            let tabContent;
-            if (type === 'quiz') {
-                tabContent = document.querySelector('#quiz');
-            } else if (type === 'exam') {
-                tabContent = document.querySelector('#exam');
-            } else {
-                tabContent = document.querySelector('#practical');
-            }
-            
-            // Create new assessment card
-            const newCard = document.createElement('div');
-            newCard.className = 'assessment-card';
-            newCard.innerHTML = `
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>${title}</h5>
-                        <p class="mb-1">Kelas: ${className}</p>
-                        <p class="mb-0">Tanggal: ${date}, ${time}</p>
-                    </div>
-                    <div>
-                        <span class="badge-warning-custom">Terjadwal</span>
-                        <button class="btn btn-sm btn-outline-primary ms-2 edit-assessment">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger ms-1 delete-assessment">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            // Add to the appropriate tab
-            tabContent.appendChild(newCard);
-            
-            // Close modal and reset form
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addAssessmentModal'));
-            modal.hide();
-            addAssessmentForm.reset();
-            
-            showToast('Assessment berhasil ditambahkan.');
-            
-            // Add event listeners to new buttons
-            const newDeleteBtn = newCard.querySelector('.delete-assessment');
-            newDeleteBtn.addEventListener('click', function() {
-                if (confirm('Apakah Anda yakin ingin menghapus assessment ini?')) {
-                    newCard.remove();
-                    showToast('Assessment berhasil dihapus.');
-                }
-            });
-        });
-
-        // Module File Input Handler
-        moduleFileInput.addEventListener('change', function() {
-            if (this.files.length > 0) {
-                const fileName = this.files[0].name;
-                const fileSize = (this.files[0].size / 1024).toFixed(2);
-                fileInfo.textContent = `File: ${fileName} (${fileSize} KB)`;
-            } else {
-                fileInfo.textContent = '';
-            }
-        });
-
-        // Upload Module Handler
-        uploadModuleBtn.addEventListener('click', function() {
-            const title = document.getElementById('moduleTitle').value;
-            const className = document.getElementById('moduleClass').value;
-            const file = document.getElementById('moduleFile').files[0];
-            
-            if (!title || !file) {
-                showToast('Mohon lengkapi semua field yang diperlukan.', 'error');
-                return;
-            }
-            
-            // Determine file icon based on extension
-            let fileIcon = 'bi-file-earmark';
-            const fileName = file.name;
-            if (fileName.endsWith('.pdf')) {
-                fileIcon = 'bi-file-earmark-pdf';
-            } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
-                fileIcon = 'bi-file-earmark-word';
-            }
-            
-            // Create new module card
-            const newCard = document.createElement('div');
-            newCard.className = 'module-card';
-            newCard.innerHTML = `
-                <div class="module-info">
-                    <div class="module-icon">
-                        <i class="bi ${fileIcon}"></i>
-                    </div>
-                    <div>
-                        <h5>${title}</h5>
-                        <p class="mb-0">Diunggah: ${new Date().toLocaleDateString('id-ID')}</p>
-                    </div>
-                </div>
-                <div>
-                    <button class="btn btn-sm btn-outline-primary me-2">
-                        <i class="bi bi-eye"></i> Lihat
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger delete-module">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </div>
-            `;
-            
-            // Add to modules section
-            modulesSection.querySelector('.row .col-md-12').appendChild(newCard);
-            
-            // Close modal and reset form
-            const modal = bootstrap.Modal.getInstance(document.getElementById('uploadModuleModal'));
-            modal.hide();
-            uploadModuleForm.reset();
-            fileInfo.textContent = '';
-            
-            showToast('Modul berhasil diunggah.');
-            
-            // Add event listener to new delete button
-            const newDeleteBtn = newCard.querySelector('.delete-module');
-            newDeleteBtn.addEventListener('click', function() {
-                if (confirm('Apakah Anda yakin ingin menghapus modul ini?')) {
-                    newCard.remove();
-                    showToast('Modul berhasil dihapus.');
-                }
-            });
-        });
-
-        // Generate Certificate Handler
-        generateCertificateBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const card = this.closest('.certificate-card');
-                const studentName = card.querySelector('h5').textContent;
-                const className = card.querySelector('p.mb-1').textContent.replace('Kelas: ', '');
-                const totalSessions = card.querySelector('p.mb-0.mt-1').textContent.match(/\d+/)[0];
-                
-                // Update certificate preview
-                document.getElementById('certificateStudentName').textContent = studentName;
-                document.getElementById('certificateClassName').textContent = className;
-                document.getElementById('certificateTotalSessions').textContent = totalSessions;
-                document.getElementById('certificateDate').textContent = new Date().toLocaleDateString('id-ID');
-                
-                // Show modal
-                const modal = new bootstrap.Modal(document.getElementById('certificatePreviewModal'));
-                modal.show();
-            });
-        });
-
-        // Download Certificate Handler
-        downloadCertificateBtn.addEventListener('click', function() {
-            showToast('Sertifikat berhasil diunduh.');
-            
-            // Close modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('certificatePreviewModal'));
-            modal.hide();
-        });
-
-        // Delete Assessment Handler
-        deleteAssessmentBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (confirm('Apakah Anda yakin ingin menghapus assessment ini?')) {
-                    const card = this.closest('.assessment-card');
-                    card.remove();
-                    showToast('Assessment berhasil dihapus.');
-                }
-            });
-        });
-
-        // Delete Module Handler
-        deleteModuleBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (confirm('Apakah Anda yakin ingin menghapus modul ini?')) {
-                    const card = this.closest('.module-card');
-                    card.remove();
-                    showToast('Modul berhasil dihapus.');
-                }
-            });
-        });
-
-        // Set current date for session date input
-        document.getElementById('sessionDate').valueAsDate = new Date();
-        
-        // Set current date for assessment date input
-        document.getElementById('assessmentDate').valueAsDate = new Date();
-    </script>
+	
+	<script src="script.js"></script>
 </body>
 </html>
