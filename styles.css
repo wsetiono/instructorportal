@@ -423,3 +423,16 @@
 	width: auto !important;
 	display: inline !important;
 }
+
+
+/* Centered logo */
+.logo-center {
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+}
+.logo-center img {
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+}
